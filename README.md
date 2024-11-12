@@ -16,3 +16,4 @@ Tecnologias Utilizadas
 HTML: Para a estrutura da página.
 CSS: Para o estilo e layout.
 JavaScript: Para a lógica do aplicativo e avaliação das proposições.
+Link para testar o aplicativo: https://mourapontes.github.io/API-Calculadora-L-gica/
