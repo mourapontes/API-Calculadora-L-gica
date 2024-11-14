@@ -11,32 +11,33 @@ document.getElementById('calcular').addEventListener('click', function() {
 });
 
 function gerarTabelaVerdade(proposicao) {
-    const valores = [];
-    const headers = ['P', 'Q', 'R', proposicao];
+    const variaveis = Array.from(new Set(proposicao.match(/[A-Z]/g))).sort(); // Extrai letras maiúsculas únicas
+    const totalVariaveis = variaveis.length;
+    const totalCombinacoes = Math.pow(2, totalVariaveis); // Total de combinações de verdade
+    const resultado = [];
 
-    // Substitui os símbolos lógicos pelos operadores JavaScript
-    const evalProposicao = proposicao
-        .replace(/∧/g, '&&')
-        .replace(/∨/g, '||')
-        .replace(/¬/g, '!') // Para negação
-        .replace(/→/g, '||') // Para implicação, substituindo por !P || Q
-        .replace(/↔/g, '==='); // Para bicondicional
+    // Cabeçalho da tabela
+    resultado.push([...variaveis, proposicao].join(' | '));
 
-    for (let p = 0; p <= 1; p++) {
-        for (let q = 0; q <= 1; q++) {
-            for (let r = 0; r <= 1; r++) {
-                // Substitui P, Q, R pelos valores 0 ou 1
-                const expression = evalProposicao
-                    .replace(/P/g, p)
-                    .replace(/Q/g, q)
-                    .replace(/R/g, r);
-                
-                // Avalia a expressão
-                const resultado = eval(expression);
-                valores.push(`P: ${p}, Q: ${q}, R: ${r} => ${resultado}`);
-            }
-        }
+    for (let i = 0; i < totalCombinacoes; i++) {
+        const valoresAtual = variaveis.map((_, index) => (i >> (totalVariaveis - 1 - index)) & 1); // Gera 0 ou 1 para cada variável
+        let expression = proposicao;
+
+        // Substitui as variáveis pelos valores correspondentes
+        variaveis.forEach((varName, index) => {
+            expression = expression.replace(new RegExp(varName, 'g'), valoresAtual[index]);
+        });
+
+        // Avalia a expressão
+        const resultadoLinha = eval(expression
+            .replace(/∧/g, '&&')
+            .replace(/∨/g, '||')
+            .replace(/¬/g, '!')
+            .replace(/→/g, '(!P || Q)') // Para implicação
+            .replace(/↔/g, '((P && Q) || (!P && !Q))')); // Para bicondicional
+
+        resultado.push([...valoresAtual, resultadoLinha ? 1 : 0].join(' | '));
     }
 
-    return `${headers.join(' | ')}\n${valores.join('\n')}`;
+    return resultado.join('\n');
 }
