@@ -31,22 +31,23 @@ function gerarTabelaVerdade(proposicao) {
             expression = expression.replace(new RegExp(varName, 'g'), valoresAtual[index]);
         });
 
+        // Substitui os operadores lógicos
+        expression = expression
+            .replace(/→/g, '||') // Para P → Q
+            .replace(/↔/g, '==') // Para P ↔ Q
+            .replace(/¬/g, '!') // Para ¬P
+            .replace(/∧/g, '&&') // Para P ∧ Q
+            .replace(/∨/g, '||'); // Para P ∨ Q
+
         // Avalia a expressão
-        const resultadoLinha = eval(expression
-            .replace(/∧/g, '&&')
-            .replace(/∨/g, '||')
-            .replace(/¬/g, '!')
-            .replace(/→/g, '(!P || Q)') // Para implicação
-            .replace(/↔/g, '((P && Q) || (!P && !Q))')); // Para bicondicional
+        console.log(expression); // Para depuração
+        const resultadoLinha = eval(expression);
 
         resultado.push([...valoresAtual, resultadoLinha ? 1 : 0].join(' | '));
 
         // Adiciona a interpretação da linha
-        interpretacao.push(`Para ${variaveis.map((v, idx) => `${v} = ${valoresAtual[idx]}`).join(', ')}, o resultado de "${proposicao}" é ${resultadoLinha ? 'verdadeiro' : 'falso'}.`);
+        interpretacao.push(`Para P=${valoresAtual[0]}, Q=${valoresAtual[1]}: ${resultadoLinha ? 'Verdadeiro' : 'Falso'}`);
     }
 
-    return {
-        tabela: resultado.join('\n'),
-        interpretacao: interpretacao.join('\n')
-    };
+    return { tabela: resultado.join('\n'), interpretacao: interpretacao.join('\n') };
 }
