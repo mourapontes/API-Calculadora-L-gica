@@ -1,53 +1,30 @@
 body {
-    background-color: #007BFF; /* Fundo azul */
-    color: white; /* Texto branco */
     font-family: Arial, sans-serif;
-    padding: 20px;
+    margin: 20px;
+    background-color: #007BFF; /* Fundo azul */
+    color: #FFFFFF; /* Texto branco */
 }
-
-.container {
-    max-width: 600px;
-    margin: auto;
-    background-color: rgba(255, 255, 255, 0.1); /* Fundo semi-transparente para a caixa */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+h1, h2 {
+    color: #FFFFFF; /* Títulos em branco */
 }
-
-h1 {
-    text-align: center;
-}
-
-label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-input {
-    width: 100%;
+input, button {
     padding: 10px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 4px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #0056b3; /* Azul mais escuro para o botão */
-    border: none;
-    border-radius: 4px;
-    color: white;
+    margin-top: 10px;
     font-size: 16px;
+}
+button {
+    background-color: #0056b3; /* Azul escuro para o botão */
+    color: #FFFFFF; /* Texto do botão em branco */
+    border: none;
     cursor: pointer;
 }
-
 button:hover {
-    background-color: #004494; /* Azul ainda mais escuro ao passar o mouse */
+    background-color: #004494; /* Azul mais escuro ao passar o mouse */
 }
-
 pre {
-    background-color: rgba(255, 255, 255, 0.2); /* Fundo semi-transparente para o resultado */
+    background-color: #f4f4f4; /* Fundo cinza claro para a tabela */
+    color: #000; /* Texto preto para a tabela */
     padding: 10px;
-    border-radius: 4px;
+    border: 1px solid #ccc;
+    overflow: auto;
 }
